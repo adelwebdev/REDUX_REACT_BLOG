@@ -11,6 +11,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 // ici import de rootReducer! JS de base va lire l'index.js dans dossier reducers
 import rootReducer from "./reducers";
+import { getPosts } from "./actions/post.action";
+import { getUser } from "./actions/user.action";
 //-------------------------------------
 
 // d'abord avant tout en Redux et dans ce fichier (ici!!) créer le PROVIDER!! qui envelopera toute l'App; à faire ICI dans index.js! comme suite:
@@ -26,6 +28,13 @@ const store = createStore(
   //ce qui est en-bàs c pr utiliser devTools et nous aider à developper!
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+// pr data dispo dès l'ouverture de l'app faire:
+// attention! vérifier l'import de getPosts et getUser (pr data des 2 DB soient dispo dès l'ouverture)
+// ça veut dire: dès que le store est monté envoi getPosts et getUser
+store.dispatch(getPosts());
+store.dispatch(getUser());
+// l'étape suivante c de faire le rendu visuel et on aura fait la boucle entière d'une action dans Redux!
 
 ReactDOM.render(
   <Provider store={store}>
