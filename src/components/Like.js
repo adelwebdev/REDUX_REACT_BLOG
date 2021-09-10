@@ -1,5 +1,7 @@
 import React from "react";
 
+//component Like pour nos like
+
 const Like = ({ post }) => {
   return (
     <div>

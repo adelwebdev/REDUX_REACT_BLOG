@@ -1,5 +1,7 @@
 import React from "react";
 
+// component PostForm pour notre formulaire (haut de page),
+
 const PostForm = () => {
   return (
     <div className="form-container">

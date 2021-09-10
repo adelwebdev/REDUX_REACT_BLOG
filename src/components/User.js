@@ -1,5 +1,7 @@
 import React from "react";
 
+//partie User (component) pr inserer une logique d'utilisateur (pseudo, photo, âge, nbr de likes)
+
 const User = () => {
   return (
     <div className="user-container">
