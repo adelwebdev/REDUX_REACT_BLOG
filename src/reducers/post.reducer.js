@@ -2,7 +2,7 @@
 // faire un initial state (de base) et un export default function avec 2 papamètres
 // les 2 params; state et action (tous le sreducers se présentent de cette façon!!!)
 // c dans le return que ça se passe! (ce que fait le reducer)
-import { GET_POSTS } from "../actions/post.action";
+import { GET_POSTS, ADD_POSTS } from "../actions/post.action";
 
 // const initialState = { stateDeBase: "hello" };
 // export default function postReducer(state = initialState, action) {
@@ -12,10 +12,16 @@ import { GET_POSTS } from "../actions/post.action";
 // maintenant aprés création de la fct getPosts (fichier: post.action.js)
 const initialState = {};
 // dans notre reducer ; c là qu'on va créer le Switch!!
+// on ajoute ici ADD_POSTS avec un nouveau case
+// on ajoute le nouveau post (action.payload); on l'ajoute comme ça ""...state"
+//  si on fait [state] on aurait action.payload et un array (avec les points ... on secupèrent les données du state et on ajoute le nouveau post)
+// on a crée l'action, on a crée le reducer , mainteant faut lancer l'action (c dans le form: PostForm.js)
 export default function postReducer(state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:
       return action.payload;
+    case ADD_POSTS:
+      return [action.payload, ...state];
     default:
       return state;
   }
