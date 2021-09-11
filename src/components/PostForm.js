@@ -3,6 +3,7 @@ import React from "react";
 // component PostForm pour notre formulaire (haut de page),
 
 const PostForm = () => {
+  // faut d'abord se récupérer toutes les infos ecrit dans ces inputs
   return (
     <div className="form-container">
       <form>
