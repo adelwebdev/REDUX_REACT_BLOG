@@ -9,7 +9,9 @@ import axios from "axios";
 // on ajoute ADD_POSTS
 
 export const GET_POSTS = "GET_POSTS";
-export const ADD_POSTS = "ADD_POSTS";
+export const ADD_POST = "ADD_POST";
+// pr exploiter la data modifiée dans les actions c EDIT_POSTS
+export const EDIT_POST = "EDIT_POST";
 
 export const getPosts = () => {
   return (dispatch) => {
@@ -30,9 +32,27 @@ export const addPost = (data) => {
     return axios
       .post("http://localhost:3001/posts", data)
       .then((res) => {
-        dispatch({ type: ADD_POSTS, payload: data });
+        dispatch({ type: ADD_POST, payload: data });
       })
       .catch((err) => console.log(err));
   };
 };
 // on ne peut pas savoir encore si ça marche ; faut aller dans post.reducer et lui expliquer comment traiter cette data du ADD_POST
+
+// ICI METHODE EDIT (CRUD)
+// d'abord on copie addPost (plus haut) et on le change: editPost
+// présenter axions pr méthode "put" comme suit (c mieux) (il nous faut l'ID de msg en question!!)
+// avec les points (...data) c pour envoyer la data en spread operator
+export const editPost = (data) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `http://localhost:3001/posts/${data.id}`,
+      data: { ...data },
+    })
+      .then((res) => {
+        dispatch({ type: EDIT_POST, payload: { ...data } });
+      })
+      .catch((err) => console.log(err));
+  };
+};

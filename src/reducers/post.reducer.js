@@ -2,7 +2,7 @@
 // faire un initial state (de base) et un export default function avec 2 papamètres
 // les 2 params; state et action (tous le sreducers se présentent de cette façon!!!)
 // c dans le return que ça se passe! (ce que fait le reducer)
-import { GET_POSTS, ADD_POSTS } from "../actions/post.action";
+import { GET_POSTS, ADD_POST } from "../actions/post.action";
 
 // const initialState = { stateDeBase: "hello" };
 // export default function postReducer(state = initialState, action) {
@@ -20,7 +20,7 @@ export default function postReducer(state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:
       return action.payload;
-    case ADD_POSTS:
+    case ADD_POST:
       return [action.payload, ...state];
     default:
       return state;

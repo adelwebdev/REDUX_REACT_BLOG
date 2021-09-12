@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addPost } from "../actions/post.action";
+import { addPost, getPosts } from "../actions/post.action";
 
 // component PostForm pour notre formulaire (haut de page),
 
@@ -18,7 +18,7 @@ const PostForm = () => {
   // événement sur soumission du formulaire: en React c onSubmit
   // on code la fct handleSubmit:  pour le preventDefault (éviter rechargement de page) ; comme suite
   // on se fait la var DATA pr stocker dedans la data à envoyer aprés soumission du formulaire
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
     if (title && content) {
       const data = {
@@ -31,10 +31,17 @@ const PostForm = () => {
       // on passe tt ça aux actions ; il nous manque un Dispatch
       // mainteant on va faire des dispatch aux actions de l'utilisateur (pas seulement quand la page s'ouvre comme avant "voir index.js")
       // on fait comme suite:   dispatch(addPost(data));
-      dispatch(addPost(data));
+      await dispatch(addPost(data));
       // pr faire un reset du formulaire aprés chaque soumission du form
       setTitle("");
       setContent("");
+      // car l'id est utile pr faire des éditions et des suppréssions!!! c comme ça qu'on va pointer dans ka DB l'article en question
+      // c pr ça qu'il faut quand on crée un nouvel artcicle qu'on demade à la DB (le Back)
+      // on a pas le choix; faut passer par la DB car c la DB qui met l'ID
+      // comme on a à chaque fois un nouvel ID (généré pr chaque nouvel publication); faut faire un appel à la DB comme ça:
+      dispatch(getPosts());
+      // pr être sûre que l'ID à été mis avant de lancer le getPosts; on met la fct en async et on met : await (voir plus haut)
+      // ce qui veut dire tt ce code là ( aprés: dispatch(addPost(data)) ) ; va attendre que la data soit bien ajouté!
     }
   };
 
