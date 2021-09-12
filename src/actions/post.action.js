@@ -5,14 +5,19 @@
 import axios from "axios";
 
 // pr ajouter des msg's on va parametrer d'abord un addPost : envoyer à la DB
-// ensuite (aprés envoie) dispatcher au Reducer les info (attention y a nouveaux posts)
+// ensuite (aprés envoie) dispatcher au Reducer les info (attention y a des nouveaux posts)
 // on ajoute ADD_POSTS
 
 export const GET_POSTS = "GET_POSTS";
 export const ADD_POST = "ADD_POST";
-// pr exploiter la data modifiée dans les actions c EDIT_POSTS
+// pr exploiter la data modifiée dans les actions c EDIT_POST
 export const EDIT_POST = "EDIT_POST";
+// pr suppression de la data c DELETE_POST
+export const DELETE_POST = "DELETE_POST";
+// pr ajouter des likes
+export const ADD_LIKE = "ADD_LIKE";
 
+// ICI METHODE GET (CRUD)
 export const getPosts = () => {
   return (dispatch) => {
     return axios
@@ -52,6 +57,39 @@ export const editPost = (data) => {
     })
       .then((res) => {
         dispatch({ type: EDIT_POST, payload: { ...data } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+// ICI METHODE DELETE (CRUD) à faire comme suit: avec postId
+export const deletePost = (postId) => {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      // ATTENTION!!! à faire avec guillements de la touche 7 (pr ci-bàs)
+      url: `http://localhost:3001/posts/${postId}`,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_POST, payload: { postId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+// et là nous avons réussie à faire in CRUD (create, read, update, delete)
+
+// ICI PROCEDURE POUR AJOUTER DES LIKES
+// là on fait la logique pr ajout de likes
+// on reprend la logique de "put"
+export const addLike = (data) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `http://localhost:3001/posts/${data.id}`,
+      data: { ...data },
+    })
+      .then((res) => {
+        dispatch({ type: ADD_LIKE, payload: { ...data } });
       })
       .catch((err) => console.log(err));
   };

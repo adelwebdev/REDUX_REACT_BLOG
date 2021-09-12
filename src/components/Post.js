@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editPost } from "../actions/post.action";
+import { deletePost, editPost } from "../actions/post.action";
 import Like from "./Like";
 import { isEmpty } from "./Utils";
 
@@ -33,7 +33,8 @@ const Post = ({ post }) => {
     e.preventDefault();
     const postData = {
       title: post.title,
-      author: user[0].pseudo,
+      // author: user[0].pseudo,     (je suis obligé car problème avec db user)
+      author: "Adel et oui!",
       content: editContent,
       likes: post.likes,
       id: post.id,
@@ -46,7 +47,8 @@ const Post = ({ post }) => {
   };
   // mainteant tt est stocké dans postData (prés à être édité) par contre faut transmettre c données là!!
   // pt ça faut tjrs appeler le HOOK dispatch; c lui qui va joindre l'action (fait plus haut avec les const)
-
+  // maintenant la suppression; (crud) on va dispatcher une fct qui va nous supprimer! faut juste passer l'ID du post
+  // on le fait ainsi : onClick={() => dispatch(deletePost(post.id))} ;
   return (
     <div className="post">
       <div className="edit-delete">
@@ -55,7 +57,11 @@ const Post = ({ post }) => {
           src="/public/icons/edit.svg"
           alt="edit"
         />
-        <img src="/public/icons/delete.svg" alt="delete" />
+        <img
+          src="/public/icons/delete.svg"
+          alt="delete"
+          onClick={() => dispatch(deletePost(post.id))}
+        />
       </div>
       <h2>{post.title}</h2>
       <img
@@ -66,7 +72,8 @@ const Post = ({ post }) => {
       {editToggle ? (
         <form onSubmit={(e) => handleEdit(e)}>
           <textarea
-            defaultValue={post.content}
+            default
+            value={post.content}
             onChange={(e) => setEditContent(e.target.value)}
           >
             <input type="submit" value="valider modification"></input>
